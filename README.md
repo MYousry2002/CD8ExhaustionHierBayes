@@ -30,3 +30,9 @@ jupyter notebook
 * 2-scGeneExprProbDistr.ipynb: Modeling gene expression probability distributions.
 * 3-HeirBayesModelMCMC.ipynb: Hierarchical Bayesian model implementation.
 * 4-TreatmentResponsePrediction.ipynb: Linking exhaustion gradients to treatment response.
+
+#### 4. Deactivate the Environment
+When you're done, deactivate the virtual environment:
+```bash
+deactivate
+```
