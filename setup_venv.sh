@@ -6,11 +6,24 @@ ENV_NAME="CD8ExhaustionHierBayes_env"
 echo "Setting up the environment: $ENV_NAME"
 
 # Check for Python 3.9 or higher
-if ! command -v python3.9 &> /dev/null
-then
-    echo "Error: Python 3.9 is not installed. Please install Python 3.9 or higher."
+PYTHON_CMD=$(command -v python3.9 || command -v python3 || command -v python)
+
+if [[ -z "$PYTHON_CMD" ]]; then
+    echo "Error: Python 3.9+ is not installed. Please install Python 3.9 or higher."
     exit 1
 fi
+
+# Ensure it's version 3.9+
+PYTHON_VERSION=$($PYTHON_CMD --version | awk '{print $2}')
+REQUIRED_VERSION="3.9"
+
+if [[ "$(printf '%s\n' "$REQUIRED_VERSION" "$PYTHON_VERSION" | sort -V | head -n1)" != "$REQUIRED_VERSION" ]]; then
+    echo "Error: Python version must be 3.9 or higher. Found: $PYTHON_VERSION"
+    exit 1
+fi
+
+echo "Using Python: $PYTHON_CMD (version $PYTHON_VERSION)"
+$PYTHON_CMD -m venv $ENV_NAME
 
 # Create a virtual environment 
 echo "Creating virtual environment..."
